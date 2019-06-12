@@ -14,31 +14,27 @@ void draw()
   fill(0);
   if (keyPressed)
   {
-    if((key== 's'||key== 'S')&&!first.check_y()) 
+    if((key== 's'||key== 'S')) 
     {
-      for(int i=0;i<4;i++)
-      {
-        first.xy[1][i]+=30;
-      }
+      first.drop();
     }
-    else if((key== 'A'||key== 'a')&&!first.check_x()) 
+    else if((key== 'A'||key== 'a')) 
     {
-      for(int i=0;i<4;i++)
-      {
-        first.xy[0][i]-=30;
-      }
+      first.move_L();
     }
-    else if((key== 'd'||key== 'D')&&!first.check_x()) 
+    else if((key== 'd'||key== 'D')) 
     {
-      for(int i=0;i<4;i++)
-      {
-        first.xy[0][i]+=30;
-      }
+      first.move_R();
     }
   }
   first.appear();
   back.appear();
-  if(first.check_lv()||first.check_y())
+  if(first.check_y())
+  {
+    first.stay();
+    first.build();
+  }
+  else if(first.check_lv())
   {
     first.stay();
     first.build();
@@ -83,14 +79,6 @@ class cub
       rect(xy[0][i],xy[1][i],30,30);
     }
   }
-  void drop()
-  {
-    for(int i=0;i<4;i++)
-    {
-      xy[1][i]+=30;
-    }
-    delay(100);
-  }
   void stay()
   {
     for(int i=0;i<4;i++)
@@ -98,11 +86,45 @@ class cub
       back.xy[xy[0][i]/30][xy[1][i]/30]=true;
     }
   }
+  
+  void drop()
+  {
+    for(int i=0;i<4;i++)
+    {
+      if(xy[1][i]!=570)
+        xy[1][i]+=30;
+      else
+        break;
+    }
+    delay(100);
+  }
+  void move_L()
+  {
+    if(!check_x())
+    {
+      for(int i=0;i<4;i++)
+      {
+          xy[0][i]-=30;
+      }
+      delay(50);
+    }
+  }
+  void move_R()
+  {
+    if(!check_x())
+    {
+      for(int i=0;i<4;i++)
+      {
+          xy[0][i]+=30;
+      }
+      delay(50);
+    }
+  }
   boolean check_x()
   {
     for(int i=0;i<4;i++)
     {
-      if(xy[0][i]==0||xy[0][i]==270)
+      if(xy[0][i]==270||xy[0][i]==0)
         return true;
     }
     return false;
@@ -120,13 +142,13 @@ class cub
   {
     for(int i=0;i<4;i++)
     {
-      if(back.xy[xy[0][i]/30][xy[1][i]/30])
+      if(back.xy[xy[0][i]/30][xy[1][i]/30+1])
         return true;
     }
     return false;
   }
-  
 }
+
 class level
 {
   boolean[][] xy=new boolean[10][20];
