@@ -29,12 +29,7 @@ void draw()
   }
   first.appear();
   back.appear();
-  if(first.check_y())
-  {
-    first.stay();
-    first.build();
-  }
-  else if(first.check_lv())
+  if(first.check_D())
   {
     first.stay();
     first.build();
@@ -100,7 +95,7 @@ class cub
   }
   void move_L()
   {
-    if(!check_x())
+    if(!check_L())
     {
       for(int i=0;i<4;i++)
       {
@@ -111,7 +106,7 @@ class cub
   }
   void move_R()
   {
-    if(!check_x())
+    if(!check_R())
     {
       for(int i=0;i<4;i++)
       {
@@ -120,29 +115,35 @@ class cub
       delay(50);
     }
   }
-  boolean check_x()
+  boolean check_L()
   {
     for(int i=0;i<4;i++)
     {
-      if(xy[0][i]==270||xy[0][i]==0)
+      if(xy[0][i]==0)
+        return true;
+      else if(back.xy[xy[0][i]/30-1][xy[1][i]/30])
         return true;
     }
     return false;
   }
-  boolean check_y()
+  boolean check_R()
+  {
+    for(int i=0;i<4;i++)
+    {
+      if(xy[0][i]==270)
+        return true;
+      else if(back.xy[xy[0][i]/30+1][xy[1][i]/30])
+        return true;
+    }
+    return false;
+  }
+  boolean check_D()
   {
     for(int i=0;i<4;i++)
     {
       if(xy[1][i]==570)
         return true;
-    }
-    return false;
-  }
-  boolean check_lv()
-  {
-    for(int i=0;i<4;i++)
-    {
-      if(back.xy[xy[0][i]/30][xy[1][i]/30+1])
+      else if(back.xy[xy[0][i]/30][xy[1][i]/30+1])
         return true;
     }
     return false;
