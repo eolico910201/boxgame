@@ -1,11 +1,13 @@
 cub first=new cub();
 level back=new level();
+int time;
 
 void setup()
 {
   first.build();
   size(300,600);
   back.seting();
+  time=0;
 }
 void draw()
 {
@@ -34,9 +36,14 @@ void draw()
     first.stay();
     first.build();
   }
-  else 
+  else if(time%10==0)
   {
     first.drop();
+  }
+  else
+  {
+    time++;
+    delay(100);
   }
 }
 
@@ -57,11 +64,53 @@ class cub
   int[][] xy=new int[2][4];
   void build()
   {
-    int num=floor(random(1,1));
+    int num=floor(random(1,7));
     if(num==1)
     {
       xy[0][0]=120; xy[1][0]=0;
       xy[0][1]=150; xy[1][1]=0;
+      xy[0][2]=120; xy[1][2]=30;
+      xy[0][3]=150; xy[1][3]=30;
+    }
+    else if(num==2)
+    {
+      xy[0][0]=90; xy[1][0]=0;
+      xy[0][1]=90; xy[1][1]=30;
+      xy[0][2]=120; xy[1][2]=30;
+      xy[0][3]=150; xy[1][3]=30;
+    }
+    else if(num==3)
+    {
+      xy[0][0]=150; xy[1][0]=0;
+      xy[0][1]=90; xy[1][1]=30;
+      xy[0][2]=120; xy[1][2]=30;
+      xy[0][3]=150; xy[1][3]=30;
+    }
+    else if(num==4)
+    {
+      xy[0][0]=90; xy[1][0]=0;
+      xy[0][1]=120; xy[1][1]=0;
+      xy[0][2]=150; xy[1][2]=0;
+      xy[0][3]=180; xy[1][3]=0;
+    }
+    else if(num==5)
+    {
+      xy[0][0]=90; xy[1][0]=0;
+      xy[0][1]=120; xy[1][1]=0;
+      xy[0][2]=120; xy[1][2]=30;
+      xy[0][3]=150; xy[1][3]=30;
+    }
+    else if(num==6)
+    {
+      xy[0][0]=120; xy[1][0]=0;
+      xy[0][1]=150; xy[1][1]=0;
+      xy[0][2]=90; xy[1][2]=30;
+      xy[0][3]=120; xy[1][3]=30;
+    }
+    else if(num==7)
+    {
+      xy[0][0]=120; xy[1][0]=0;
+      xy[0][1]=90; xy[1][1]=30;
       xy[0][2]=120; xy[1][2]=30;
       xy[0][3]=150; xy[1][3]=30;
     }
@@ -91,7 +140,7 @@ class cub
       else
         break;
     }
-    delay(100);
+    delay(50);
   }
   void move_L()
   {
